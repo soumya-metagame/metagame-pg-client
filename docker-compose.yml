@@ -7,7 +7,6 @@ services:
       NODE_ENV: production
     ports:
       - 3000:3000
-    command: npm start -- --host 0.0.0.0
 
 
 
