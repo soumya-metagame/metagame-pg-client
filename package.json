@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "HOST=35.154.192.139 PORT=3000 next dev",
+    "dev": "next dev",
     "build": "next build",
-    "start": "HOST=35.154.192.139 PORT=3000 next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
