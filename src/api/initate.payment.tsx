@@ -25,5 +25,19 @@ export const InitatePayment =  ({ data }: { data: PaymentData }) => {
     })
 };
 
+export const getCapturePaymentData = (paymentId:any) =>{
+    return new Promise ((resolve, reject)=>{
+        axios.get(`${Config.BaseUrl}/capture_payment/${paymentId}`)
+        .then((result)=>{
+            resolve(result.data)
+        })
+        .catch((error:any)=>{
+            console.log("the error", error)
+            reject(error)
+
+        })
+    })
+};
+
 
 

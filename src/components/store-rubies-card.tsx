@@ -1,10 +1,15 @@
 "use client";
 
-import { InitatePayment } from "@/api/initate.payment";
+import { InitatePayment, getCapturePaymentData } from "@/api/initate.payment";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Random } from 'random-js';
 import Loader from "./Loader";
+import { Result } from "postcss";
+import io from 'socket.io-client';
+import { Config } from "../../config";
+import Success from "./Success";
+
 
 
 
@@ -41,37 +46,84 @@ const offerData = [
 
 export default function StoreRubiesCard({ }: Props) {
   const [activeTab, setActiveTab] = useState("ITEMS");
+  const useSocket = () => {
+    const [capturedData, setCapturedData] = useState<any | null>(null);
+  
+    useEffect(() => {
+      const socket = io(`${Config.sockerUrl}`);
+  
+      socket.on('paymentCapture', (data) => {
+        setCapturedData(data);
+      });
+  
+      return () => {
+        socket.disconnect();
+      };
+    }, []);
+  
+    return { capturedData, handleDataCapture: setCapturedData };
+  };
+
+  const { capturedData, handleDataCapture } = useSocket();
+
+  console.log("socket data",capturedData)
 
   return (
+   
     <div className="w-[320px] bg-[#1F1F3B] overflow-hidden rounded-md">
+     {
+      capturedData ? 
+      <div className="bg-gray-100 h-screen">
+      <div className="bg-white p-6  md:mx-auto">
+        <svg viewBox="0 0 24 24" className="text-green-600 w-16 h-16 mx-auto my-6">
+            <path fill="currentColor"
+                d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+            </path>
+        </svg>
+        <div className="text-center">
+            <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">Payment Done!</h3>
+            <p className="text-gray-600 my-2">Thank you for completing your secure online payment.</p>
+            <p> Have a great day!  </p>
+            <div className="py-10 text-center">
+                <a href="#" className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
+                    GO BACK 
+               </a>
+            </div>
+        </div>
+    </div>
+  </div>
+      :
+      <>
       <div className="w-full text-center py-4 font-bold text-2xl bg-gradient-to-r from-[#1F1F3B] to-[#2C2C49]">
-        <p className="text-gray-100">Store</p>
+      <p className="text-gray-100">Store</p>
+    </div>
+    <div className="flex justify-center text-center bg-gradient-to-r from-[#0e0e25] via-[#20203c] h-10 to-[#2c2c49]">
+      <div
+        onClick={() => setActiveTab("ITEMS")}
+        className={`w-full flex items-center cursor-pointer justify-center self-stretch ${activeTab === "ITEMS"
+            ? "bg-gradient-to-r from-[#002B5E] via-[#003FA3] to-[#0066FF]"
+            : "bg-transparent"
+          }`}
+      >
+        <p>Items</p>
       </div>
-      <div className="flex justify-center text-center bg-gradient-to-r from-[#0e0e25] via-[#20203c] h-10 to-[#2c2c49]">
-        <div
-          onClick={() => setActiveTab("ITEMS")}
-          className={`w-full flex items-center cursor-pointer justify-center self-stretch ${activeTab === "ITEMS"
-              ? "bg-gradient-to-r from-[#002B5E] via-[#003FA3] to-[#0066FF]"
-              : "bg-transparent"
-            }`}
-        >
-          <p>Items</p>
-        </div>
-        <div
-          onClick={() => setActiveTab("RUBIES")}
-          className={`w-full flex items-center cursor-pointer justify-center self-stretch ${activeTab === "RUBIES"
-              ? "bg-gradient-to-r from-[#002B5E] via-[#003FA3] to-[#0066FF] "
-              : "bg-transparent"
-            }`}
-          text-gray-100>
-          <p className="text-gray-100">Rubies</p>
-        </div>
+      <div
+        onClick={() => setActiveTab("RUBIES")}
+        className={`w-full flex items-center cursor-pointer justify-center self-stretch ${activeTab === "RUBIES"
+            ? "bg-gradient-to-r from-[#002B5E] via-[#003FA3] to-[#0066FF] "
+            : "bg-transparent"
+          }`}
+        text-gray-100>
+        <p className="text-gray-100">Rubies</p>
       </div>
-      <div>
-        {offerData.map((offer, index) => (
-          <OfferList key={index} data={offer} />
-        ))}
-      </div>
+    </div>
+    <div>
+      {offerData.map((offer, index) => (
+        <OfferList key={index} data={offer} />
+      ))}
+    </div>
+    </>
+     }
     </div>
   );
 }
@@ -90,35 +142,36 @@ interface PaymentData {
 
 
 function OfferList({ data }: { data: (typeof offerData)[0] }) {
+  const [refId, setRefId] = useState('')
+  const [transactionStatus, setTransactionStatus] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [url,setUrl] = useState('')
+  const random = new Random();
+
   const [initatePaymentData, setInitatePaymentData] = useState<PaymentData>({
     userId: "1",
     customerName: "Soumya Ranjan Mohanty",
     mobileNumber: "9876543210",
-    referenceId: "1111111111",
+    referenceId: random.integer(1000, 1000000).toString(),
     amount: "50",
     emailId: "test@gmail.com",
     returnUrl: "quotus.co.in"
   });
 
 
-  const [loading, setLoading] = useState(false)
-  const [url,setUrl] = useState('')
-  const random = new Random();
 
 
 
-  const generateRandomNumber = () => new Promise((resolve) => {
-    const randomNumber = random.integer(1000, 1000000);
-    const randomString1 = randomNumber.toString();
-  
-    setInitatePaymentData((prevData) => ({
-      ...prevData,
-      referenceId: randomString1,
-    }));
-  
-    // Resolve the promise with the generated random number or any other data
-    resolve(randomNumber);
-  });
+  // useEffect(()=>{
+  //   if(refId !== ''){
+  //     getCapturePaymentData(refId)
+  //     .then((res:any)=>{
+  //       console.log(res.data)
+  //     })
+  //   }
+
+  // },[refId])
+
 
   const handleRedirect = (data:any) =>{
     window.open(data, '_blank')
@@ -130,27 +183,25 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
 
   const handleInitatePayment = async () => {
     setLoading(true);
-    generateRandomNumber()
-    .then((result:any)=>{
-      if (!result && !initatePaymentData.referenceId && !initatePaymentData.amount && !initatePaymentData.returnUrl && !initatePaymentData.emailId) {
+      console.log(initatePaymentData)
+      if (initatePaymentData.referenceId === '') {
         console.log("something error")
-      }
-      else{
+      }else{
         try{
           InitatePayment({ data: initatePaymentData })
           .then(async(res:any)=>{
             if(res){
               handleRedirect(res.data.dataUrl)
+              console.log("refid",res.data.referenceId)
             }
           })
         }
         catch(error){
           console.log("error message",error)
+  
         }
       }
-  
-      
-    })
+    
     
     
 
@@ -159,8 +210,9 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
 
   return (
     <>
-    {
-      loading ? Loader :
+   
+      
+
       <div className="flex items-center justify-between px-4 border-b border-blue-400 py-2">
       
       <div className="flex items-center gap-4">
@@ -171,7 +223,8 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
       </div>
       <button onClick={handleInitatePayment} className="border rounded-md w-[100px] text-gray-100">{data.price}</button>
     </div>
-    }
+      
+    
     </>
    
     
