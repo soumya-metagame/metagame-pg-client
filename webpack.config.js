@@ -1,5 +1,0 @@
-
-devServer: {
-    allowedHosts:'all'
-    
-    }
