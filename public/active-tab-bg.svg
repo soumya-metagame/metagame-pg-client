@@ -1,0 +1,44 @@
+<svg width="160" height="42" viewBox="0 0 160 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="bg">
+<g id="Rectangle 2177" filter="url(#filter0_di_2025_3093)">
+<path d="M160 0H0V41H160V0Z" fill="url(#paint0_linear_2025_3093)"/>
+<path d="M160 0H0V41H160V0Z" fill="url(#paint1_radial_2025_3093)"/>
+</g>
+<path id="Rectangle 2181" d="M160 40H0V41H160V40Z" fill="url(#paint2_linear_2025_3093)"/>
+</g>
+<defs>
+<filter id="filter0_di_2025_3093" x="0" y="0" width="160" height="42" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2025_3093"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2025_3093" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.4 0 0 0 0 1 0 0 0 0.5 0"/>
+<feBlend mode="normal" in2="shape" result="effect2_innerShadow_2025_3093"/>
+</filter>
+<linearGradient id="paint0_linear_2025_3093" x1="80" y1="0" x2="80" y2="41" gradientUnits="userSpaceOnUse">
+<stop stop-color="#002B5E"/>
+<stop offset="0.351" stop-color="#003FA3"/>
+<stop offset="0.554" stop-color="#0042C6"/>
+<stop offset="1" stop-color="#0066FF"/>
+</linearGradient>
+<radialGradient id="paint1_radial_2025_3093" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(80 41) rotate(-90) scale(39 80)">
+<stop stop-color="#00FFFF" stop-opacity="0.7"/>
+<stop offset="0.609375" stop-color="#00FFFF" stop-opacity="0.171354"/>
+<stop offset="1" stop-color="#00FFFF" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="paint2_linear_2025_3093" x1="0" y1="-250.5" x2="160" y2="-250.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0066FF" stop-opacity="0"/>
+<stop offset="0.234375" stop-color="#0066FF"/>
+<stop offset="0.364583" stop-color="#00FFFF"/>
+<stop offset="0.5" stop-color="#99FFFF"/>
+<stop offset="0.630208" stop-color="#00FFFF"/>
+<stop offset="0.760417" stop-color="#0066FF"/>
+<stop offset="1" stop-color="#0066FF" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
