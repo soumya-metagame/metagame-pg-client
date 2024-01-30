@@ -31,3 +31,38 @@ body {
     text-wrap: balance;
   }
 }
+
+.buy-rubbies-btn {
+  border-radius: 20px;
+  background: var(--secondary_color, #2c2c49);
+  box-shadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.5),
+    0px -1px 0px 0px #565c96 inset;
+}
+
+.title-card {
+  background: linear-gradient(0deg, #1f1f3b 0%, #2c2c49 100%);
+  filter: drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5));
+}
+
+.rubbies-card {
+  background: linear-gradient(0deg, #2c2c49, #2d2d4c, #393964, #3e3e6d);
+  box-shadow: 0px 1px 0px 0px #565c96 inset;
+  filter: drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5));
+}
+
+.rubbies-card:hover {
+  background: var(--secondary_color, #2c2c49);
+  box-shadow: 0px 1px 0px 0px #3e3e6d inset;
+  filter: drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5));
+  cursor: inherit;
+}
+
+.action-bar {
+  background: linear-gradient(
+    0deg,
+    #00001c 0%,
+    #212138 49%,
+    #2c2c49 50%,
+    #3e3e6d 100%
+  );
+}
