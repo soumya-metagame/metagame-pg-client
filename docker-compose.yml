@@ -6,7 +6,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 80:80
+      - 3030:3030
 
 
 
