@@ -65,7 +65,7 @@ export default function StoreRubiesCard({}: Props) {
   console.log("socket data", capturedData);
 
   return (
-    <div className="flex w-[320px] items-center">
+    <div className="flex w-[320px] items-center justify-center">
       {capturedData ? (
         <div className="bg-gray-100 h-screen">
           <div className="bg-white p-6  md:mx-auto">
@@ -98,11 +98,11 @@ export default function StoreRubiesCard({}: Props) {
           </div>
         </div>
       ) : (
-        <div className="w-[320px] py-2 px-1 space-y-1">
-          <div className="w-full text-center py-2 font-bold text-2xl title-card">
+        <div className="w-[320px] py-2 px-1 space-y-1 grid place-content-center">
+          {/* <div className="w-full text-center py-2 font-bold text-2xl title-card">
             <p className="text-gray-100">Store</p>
-          </div>
-          <div className="flex justify-center text-center bg-gradient-to-r from-[#0e0e25] via-[#20203c] h-10 to-[#2c2c49]">
+          </div> */}
+          {/* <div className="flex justify-center text-center bg-gradient-to-r from-[#0e0e25] via-[#20203c] h-10 to-[#2c2c49]">
             <div
               onClick={() => setActiveTab("ITEMS")}
               className={`w-full flex items-center cursor-pointer justify-center self-stretch ${
@@ -124,7 +124,7 @@ export default function StoreRubiesCard({}: Props) {
             >
               <p className="text-gray-100">RUBIES</p>
             </div>
-          </div>
+          </div> */}
           <div className="space-y-1">
             {offerData.map((offer, index) => (
               <OfferList key={index} data={offer} />
