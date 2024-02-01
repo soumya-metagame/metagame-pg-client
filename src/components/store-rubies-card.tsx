@@ -65,7 +65,7 @@ export default function StoreRubiesCard({}: Props) {
   console.log("socket data", capturedData);
 
   return (
-    <div className="flex w-[320px] items-center justify-center">
+    <div className="flex w-[320px] dark:text-white items-center justify-center">
       {capturedData ? (
         <div className="bg-gray-100 h-screen">
           <div className="bg-white p-6  md:mx-auto">
@@ -204,7 +204,7 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
           <div>
             <Image src={data.icon} height={40} width={40} alt="Ruby icon" />
           </div>
-          <div className="pointer-events-none">{data.content}</div>
+          <div className="pointer-events-none text-gray-100">{data.content}</div>
         </div>
         <button
           onClick={handleInitatePayment}
