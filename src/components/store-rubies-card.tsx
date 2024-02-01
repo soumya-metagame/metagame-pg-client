@@ -46,7 +46,9 @@ export default function StoreRubiesCard({}: Props) {
     const [capturedData, setCapturedData] = useState<any | null>(null);
 
     useEffect(() => {
-      const socket = io(`${Config.sockerUrl}`);
+      const socket = io(`${Config.sockerUrl}`, {
+        path: "/socket/"
+      });
 
       socket.on("paymentCapture", (data) => {
         setCapturedData(data);
