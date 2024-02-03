@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react';
 import io from "socket.io-client";
 import { Config } from '../../../../config';
 import { DepositBalance } from '@/api/deposit.balance';
-import { useCaptureData } from '@/context/capture.data.context'
+import { useCaptureData } from '@/context/capture.data.context';
+import { useRouter } from 'next/router'
+
 
 const PaymentDetailPage = () => {
     const {capturedData} = useCaptureData();
@@ -16,6 +18,9 @@ const PaymentDetailPage = () => {
         externalTransactionId:'exid1',
         amount:'10000'
     })
+
+    const router = useRouter()
+    console.log("router data",router.query);
  
 
 
