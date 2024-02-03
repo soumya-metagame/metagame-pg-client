@@ -55,6 +55,8 @@ export default function StoreRubiesCard({}: Props) {
       socket.on("paymentCapture", (data) => {
         updateCapturedData(data);
         setCapturedData(data);
+        localStorage.setItem('paymentData', JSON.stringify(data));
+
         
       });
 
@@ -62,6 +64,7 @@ export default function StoreRubiesCard({}: Props) {
         socket.disconnect();
       };
     }, []);
+
 
     return { capturedData, handleDataCapture: setCapturedData };
   };
@@ -180,7 +183,7 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
   // },[refId])
 
   const handleRedirect = (data: any) => {
-    window.open(data,"_self");
+    window.open(data, "_blank");
     setLoading(false);
   };
 

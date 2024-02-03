@@ -5,14 +5,15 @@ import io from "socket.io-client";
 import { Config } from '../../../../config';
 import { DepositBalance } from '@/api/deposit.balance';
 import { useCaptureData } from '@/context/capture.data.context';
-import { useParams } from 'next/navigation'
 
 
 const PaymentDetailPage = () => {
-    const router = useParams()
+
+    const [paymentData,setPaymentData] = useState(null)
+
 
     const {capturedData} = useCaptureData();
-    const [status,setStatus] = useState(false)
+    const [status,setStatus] = useState(true)
     const [paramData,setParamData] = useState ({
         userId:'4108',
         clientId:'jd01LRvXw-qa',
@@ -21,26 +22,38 @@ const PaymentDetailPage = () => {
         amount:'10000'
     })
 
-    console.log("router data",router);
  
 
 
   console.log("socket data", capturedData);
+
+  useEffect(()=>{
+    if(typeof window !== 'undefined'){
+        const data = JSON.parse(localStorage.getItem('paymentData') ?? 'null');
+        setData(data)
+    }
+  })
+
+  const setData = (data:any) =>{
+    setPaymentData(data)
+    localStorage.clear();
+
+  }
 
   
     
 
 
   useEffect(()=>{
-    if (capturedData){
+    if (paymentData){
         DepositBalance({ data:paramData }).then(async (res: any) => {
             if (res) {
-              console.log("refid", res);
+              console.log("response of deposit", res);
               setStatus(true)
             }
           });
     }
-  },[capturedData])
+  },[paymentData])
 
 
   return (
@@ -68,7 +81,7 @@ const PaymentDetailPage = () => {
               <p> Have a great day! </p>
               <div className="py-10 text-center">
                 <a
-                  href="#"
+                  href="https://deposit.skillzlive.in/"
                   className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3"
                 >
                   GO BACK
