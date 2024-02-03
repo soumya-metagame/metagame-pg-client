@@ -17,28 +17,48 @@ type Props = {};
 const offerData = [
   {
     icon: "/ruby.png",
-    content: "60 Rubies",
-    price: "0,99$",
+    content: "180",
+    price: "23",
   },
   {
     icon: "/ruby.png",
-    content: "300 Rubies",
-    price: "4,99$",
+    content: "360",
+    price: "45",
   },
   {
     icon: "/ruby.png",
-    content: "1500 Rubies",
-    price: "24,99$",
+    content: "600",
+    price: "75",
   },
   {
     icon: "/ruby.png",
-    content: "3000 Rubies",
-    price: "49,99$",
+    content: "1200",
+    price: "150",
   },
   {
     icon: "/ruby.png",
-    content: "6000 Rubies",
-    price: "99,99$",
+    content: "3000",
+    price: "375",
+  },
+  {
+    icon: "/ruby.png",
+    content: "6000",
+    price: "750",
+  },
+  {
+    icon: "/ruby.png",
+    content: "12000",
+    price: "1500",
+  },
+  {
+    icon: "/ruby.png",
+    content: "24000",
+    price: "3000",
+  },
+  {
+    icon: "/ruby.png",
+    content: "60000",
+    price: "7500",
   },
 ];
 
@@ -213,14 +233,14 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
           <div>
             <Image src={data.icon} height={40} width={40} alt="Ruby icon" />
           </div>
-          <div className="pointer-events-none text-gray-100">{data.content}</div>
+          <div className="pointer-events-none text-gray-100">{data.content} Rubies</div>
         </div>
         <button
           onClick={handleInitatePayment}
           className="buy-rubbies-btn
  text-white text-[14px] flex items-center justify-center rounded-full w-[88px] h-[28px]"
         >
-          {data.price}
+          $ {data.price}
         </button>
       </div>
     </>
