@@ -5,10 +5,12 @@ import io from "socket.io-client";
 import { Config } from '../../../../config';
 import { DepositBalance } from '@/api/deposit.balance';
 import { useCaptureData } from '@/context/capture.data.context';
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 
 
 const PaymentDetailPage = () => {
+    const router = useParams()
+
     const {capturedData} = useCaptureData();
     const [status,setStatus] = useState(false)
     const [paramData,setParamData] = useState ({
@@ -19,8 +21,7 @@ const PaymentDetailPage = () => {
         amount:'10000'
     })
 
-    const router = useRouter()
-    console.log("router data",router.query);
+    console.log("router data",router);
  
 
 
