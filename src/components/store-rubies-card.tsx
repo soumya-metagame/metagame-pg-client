@@ -160,7 +160,7 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
     referenceId: random.integer(1000, 1000000).toString(),
     amount: "50",
     emailId: "test@gmail.com",
-    returnUrl: "https://deposit.skillzlive.in/",
+    returnUrl: "https://deposit.skillzlive.in/payment/1",
   });
 
   // useEffect(()=>{
