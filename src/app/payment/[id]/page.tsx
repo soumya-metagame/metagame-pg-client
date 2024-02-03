@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import io from "socket.io-client";
 import { Config } from '../../../../config';
 import { DepositBalance } from '@/api/deposit.balance';
+import { useCaptureData } from '@/context/capture.data.context'
 
 const PaymentDetailPage = () => {
+    const {capturedData} = useCaptureData();
     const [status,setStatus] = useState(false)
     const [paramData,setParamData] = useState ({
         userId:'4108',
@@ -15,26 +17,7 @@ const PaymentDetailPage = () => {
         amount:'10000'
     })
  
-    const [activeTab, setActiveTab] = useState("ITEMS");
-  const useSocket = () => {
-    const [capturedData, setCapturedData] = useState<any | null>(null);
 
-    useEffect(() => {
-      const socket = io(`${Config.sockerUrl}`);
-
-      socket.on("paymentCapture", (data) => {
-        setCapturedData(data);
-      });
-
-      return () => {
-        socket.disconnect();
-      };
-    }, []);
-
-    return { capturedData, handleDataCapture: setCapturedData };
-  };
-
-  const { capturedData, handleDataCapture } = useSocket();
 
   console.log("socket data", capturedData);
 

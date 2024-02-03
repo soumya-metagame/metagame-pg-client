@@ -10,6 +10,8 @@ import io from "socket.io-client";
 import { Config } from "../../config";
 import Success from "./Success";
 
+import {useCaptureData} from '../context/capture.data.context'
+
 type Props = {};
 
 const offerData = [
@@ -42,6 +44,8 @@ const offerData = [
 
 export default function StoreRubiesCard({}: Props) {
   const [activeTab, setActiveTab] = useState("ITEMS");
+  const { updateCapturedData } = useCaptureData();
+
   const useSocket = () => {
     const [capturedData, setCapturedData] = useState<any | null>(null);
 
@@ -49,7 +53,9 @@ export default function StoreRubiesCard({}: Props) {
       const socket = io(`${Config.sockerUrl}`);
 
       socket.on("paymentCapture", (data) => {
+        updateCapturedData(data);
         setCapturedData(data);
+        
       });
 
       return () => {
@@ -174,7 +180,7 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
   // },[refId])
 
   const handleRedirect = (data: any) => {
-    window.open(data, "_blank");
+    window.open(data);
     setLoading(false);
   };
 
