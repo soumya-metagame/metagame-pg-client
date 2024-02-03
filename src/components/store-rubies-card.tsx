@@ -180,7 +180,7 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
   // },[refId])
 
   const handleRedirect = (data: any) => {
-    window.open(data);
+    window.open(data,"_self");
     setLoading(false);
   };
 
