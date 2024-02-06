@@ -1,11 +1,13 @@
 import axios from "axios";
 import { Config } from "../../config";
+import { resolve } from "path";
 
 interface AuthType {
     auth:string 
     
     
   }
+
 
   export const AuthToken =  ( data: AuthType ) => {
     console.log("data inside the auth  component",data)
@@ -27,4 +29,23 @@ interface AuthType {
                 reject(error)
             })
     })
+};
+
+export const getPlayer = (userId: string) => {
+    console.log("userId", userId);
+    return new Promise((resolve, reject) => {
+        axios.get(`${Config.BaseUrl}/user`, {
+            params: {
+                userId: userId,
+                clientId: 'jd01LRvXw-qa' // Make sure clientId is defined somewhere
+            }
+        })
+        .then((response) => {
+            resolve(response.data);
+        })
+        .catch((error) => {
+            console.error("Error fetching player data:", error);
+            reject(error);
+        });
+    });
 };
