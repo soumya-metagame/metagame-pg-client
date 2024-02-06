@@ -12,7 +12,7 @@ interface PaymentData {
   }
 
 export const InitatePayment =  ({ data }: { data: PaymentData }) => {
-    console.log("data inside the payment initiate component",typeof(data))
+    console.log("data inside the payment initiate component",data)
     return new Promise((resolve, reject) => {
         axios.post(`${Config.BaseUrl}/payment_url`, data)
         .then((result) => {

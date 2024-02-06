@@ -10,7 +10,10 @@ import io from "socket.io-client";
 import { Config } from "../../config";
 import Success from "./Success";
 
+
 import {useCaptureData} from '../context/capture.data.context'
+import { useSearchParams } from 'next/navigation';
+import { AuthToken } from "@/api/auth.token";
 
 type Props = {};
 
@@ -63,8 +66,30 @@ const offerData = [
 ];
 
 export default function StoreRubiesCard({}: Props) {
+  const [userId, setUserId] = useState('')
+  console.log("console inside the auth ueseffect",userId)
+
   const [activeTab, setActiveTab] = useState("ITEMS");
   const { updateCapturedData } = useCaptureData();
+  const searchParams = useSearchParams();
+  const queryParam:any = searchParams.get('auth');
+  console.log("-----",queryParam)
+
+  useEffect (()=>{
+    console.log("console inside the auth ueseffect empty")
+
+    AuthToken(queryParam)
+    .then((res:any)=>{
+      setUserId(res.data[0].id)
+      console.log("console inside the auth ueseffect",res)
+    })
+    .catch ((error)=>{
+      console.log("console inside the auth ueseffect",error)
+
+    })
+
+
+  },[queryParam])
 
   const useSocket = () => {
     const [capturedData, setCapturedData] = useState<any | null>(null);
@@ -156,7 +181,7 @@ export default function StoreRubiesCard({}: Props) {
           </div>
           <div className="space-y-1">
             {offerData.map((offer, index) => (
-              <OfferList key={index} data={offer} />
+              <OfferList key={index} data={offer} userId={userId} />
             ))}
           </div>
         </div>
@@ -175,22 +200,33 @@ interface PaymentData {
   returnUrl: string;
 }
 
-function OfferList({ data }: { data: (typeof offerData)[0] }) {
-  const [refId, setRefId] = useState("");
+function OfferList({ data,userId }:any ) {
+  const random = new Random();
+
+  const [refId, setRefId] = useState(random.integer(1000, 1000000).toString());
   const [transactionStatus, setTransactionStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
-  const random = new Random();
+
 
   const [initatePaymentData, setInitatePaymentData] = useState<PaymentData>({
-    userId: "1",
+    userId: userId,
     customerName: "Soumya Ranjan Mohanty",
     mobileNumber: "9876543210",
-    referenceId: random.integer(1000, 1000000).toString(),
+    referenceId: refId ,
     amount: "50",
     emailId: "test@gmail.com",
-    returnUrl: "https://deposit.skillzlive.in/payment/1",
+    returnUrl: `https://deposit.skillzlive.in/payment/${refId}`,
   });
+
+  useEffect(()=>{
+    setInitatePaymentData({
+      ...initatePaymentData,
+      userId: userId,
+    });
+  },[userId])
+
+  console.log("userId--------------",userId)
 
   // useEffect(()=>{
   //   if(refId !== ''){
@@ -210,9 +246,7 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
   const handleInitatePayment = async () => {
     setLoading(true);
     console.log(initatePaymentData);
-    if (initatePaymentData.referenceId === "") {
-      console.log("something error");
-    } else {
+   
       try {
         InitatePayment({ data: initatePaymentData }).then(async (res: any) => {
           if (res) {
@@ -222,7 +256,7 @@ function OfferList({ data }: { data: (typeof offerData)[0] }) {
         });
       } catch (error) {
         console.log("error message", error);
-      }
+      
     }
   };
 
